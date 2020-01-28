@@ -6,3 +6,7 @@ OrderService/OrderService/bin/roslyn/*.dll
 OrderService/OrderService/obj/*
 OrderService/packages/*
 OrderService/OrderService.Tests/obj/*
+OrderService/OrderService.Tests/bin/Debug/*.dll
+OrderService/OrderService.Tests/bin/Debug/*.pdb
+OrderService/OrderService.Tests/bin/Debug/*.xml
+OrderService/OrderService.Tests/bin/Debug/*.config
