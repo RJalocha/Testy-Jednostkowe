@@ -1,5 +1,9 @@
 OrderService/OrderService/bin/*.dll
 OrderService/OrderService/bin/*.pdb
 OrderService/OrderService/bin/*.xml
+OrderService/OrderService/bin/*.config
 OrderService/OrderService/bin/roslyn/*.dll
 OrderService/OrderService/obj/*
+OrderService/packages/*
+OrderService/OrderService.Tests/obj/*
+OrderService/OrderService.Tests/bin/*
