@@ -121,6 +121,9 @@
     <Compile Include="Helpers\ClientOrderTotalPriceCalculatorTest.cs" />
     <Compile Include="Helpers\OrderTotalPriceCalculatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\ClientOrderValidatorTest.cs" />
+    <Compile Include="Validators\DeliveryValidatorTest.cs" />
+    <Compile Include="Validators\ProductValidatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
