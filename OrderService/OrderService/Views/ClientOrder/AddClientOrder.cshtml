@@ -1,0 +1,138 @@
+﻿@using OrderService.Models
+@model ClientOrder
+
+@{
+    ViewBag.Title = "AddClientOrder";
+
+    decimal? discount = Model.Discount != 0 ? (decimal?)Model.Discount : null;
+
+    string inputProductNameClass = ".productName";
+    string inputProductIdClass = ".productId";
+    string inputQuantityClass = ".quantity";
+}
+
+<script language="javascript">
+    function cancelAdd() {
+        window.location.href = `/ClientOrder/GetClientOrderList`;
+    }
+    function addClientOrder() {
+        let clientOrder = {}
+        clientOrder.ClientId = $("#ClientId").val()
+        clientOrder.DeliveryId = $("#DeliveryId").val()
+        clientOrder.Discount = $("#Discount").val() 
+
+        const productIds = $("@inputProductIdClass")
+        const productNames = $("@inputProductNameClass")
+        const quantities = $("@inputQuantityClass")
+        let orders = []
+        for (let i = 0; i < productIds.length; i++) {
+            let order = { productId: productIds[i].value, quantity: quantities[i].value }
+            orders.push(order)
+        }
+        clientOrder.Orders = orders
+
+        $.ajax({
+            url: "/ClientOrder/AddClientOrderPost",
+            type: "POST",
+            dataType: "html",
+            data: { clientOrder: clientOrder },
+
+            success: function (result) {
+                if (result.startsWith('<!DOCTYPE html>')) {
+                    $('body').html(result);
+                } else {
+                    window.location.href = '/ClientOrder/GetClientOrderList'
+                }
+            }
+        });
+    }
+</script>
+
+<h2 id="add-client-order-header">Add Client Order</h2>
+
+<fieldset>
+    @Html.ValidationSummary( true )
+
+
+    <table class="table table-striped" style="width:50%">
+        <tr>
+            <td><input id="btnAdd" type="button" value="Add" class="btn btn-primary" /></td>
+            <td>
+                <div class="form-group">
+                    @Html.Label( "Product" )
+                    @Html.DropDownList( "ProductId", (IEnumerable<SelectListItem>)ViewBag.Products, new { @class = "form-control", style = "display:inline; width:70%" })
+                    @Html.ValidationMessage( "ProductId" )
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    @Html.Label( "Quantity" )
+                    <input type="number" id="Quantity" name="Quantity" value="1" class="form-control" style="display:inline; width:70%" />
+                    @Html.ValidationMessage( "Quantity" )
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <table id="dataTable" class="table table-striped" style="width:50%">
+        <tr>
+            <td>
+                #
+            </td>
+            <td>
+                Product Name
+            </td>
+            <td>
+                Quantity
+            </td>
+        </tr>
+    </table>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ClientId)
+        @Html.DropDownListFor( m => m.ClientId, (IEnumerable<SelectListItem>)ViewBag.Clients, new { @class = "form-control" })
+        @Html.ValidationMessage( "ClientId" )
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DeliveryId)
+        @Html.DropDownListFor( m => m.DeliveryId, (IEnumerable<SelectListItem>)ViewBag.Deliveries, new { @class = "form-control" })
+        @Html.ValidationMessage( "DeliveryId" )
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor( m => m.Discount )
+        <input type="number" id="Discount" name="Discount" value="@discount" class="form-control" />
+        @Html.ValidationMessageFor( m => m.Discount )
+    </div>
+
+    <input id="add-client-order" type="button" value="Add" onclick="addClientOrder()" class="btn btn-success" />
+    <input id="cancel-add-client-order" type="button" value="Cancel" onclick="cancelAdd()" class="btn btn-default" />
+</fieldset>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#btnAdd").click(function () {
+
+                const productId = $("#ProductId").val()
+                const productName = $( "#ProductId option:selected" ).text();
+                const quantity = $("#Quantity").val()
+
+                $.ajax({
+                    url: "/ClientOrder/AddOrder",
+                    type: "POST",
+                    dataType: "html",
+                    data: { productId: productId, productName: productName, quantity: quantity,  },
+                    success: function (result) {
+                        $('#dataTable').append(result);
+
+                    }
+                });
+            });
+        });
+
+    </script>
+}

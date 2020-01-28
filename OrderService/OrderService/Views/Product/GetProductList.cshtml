@@ -1,0 +1,73 @@
+﻿@using OrderService.Models
+@model List<Product>
+
+@{
+    ViewBag.Title = "ProductList";
+}
+
+<script language="javascript">
+    function updateProduct(productId) {
+        window.location.href=`/Product/UpdateProduct?id=${productId}`;
+    }
+    function deleteProduct(productId) {
+        const response = confirm("Do you want to delete this product?")
+        if (response) {
+            $("#deleteProductFormId" + productId).submit()
+        }
+    }
+</script>
+
+<h2 id="products-list-header">Product List</h2>
+
+<a id="btn-add-product" class="btn btn-primary" href="/Product/AddProduct">Add &raquo;</a>
+
+@Html.ValidationSummary(true)
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width:10%">Edit</th>
+            <th style="width:10%">Delete</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Product p in Model)
+        {
+            <tr>
+                <td><input id="btn-edit-product" type="button" onclick="updateProduct(@p.Id)" value="Edit" class="btn btn-success" /></td>
+                @using (Html.BeginForm("DeleteProductPost", "Product", new { id = p.Id }, FormMethod.Post, new { id = "deleteProductFormId" + @p.Id }))
+                {
+                    <td><input id="btn-delete-product" type="button" onclick="deleteProduct(@p.Id)" value="Delete" class="btn btn-danger" /></td>
+                }
+                <td>@p.Name</td>
+                <td>@p.Description</td>
+                <td>@p.Price</td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <table class="table table-striped" style="margin-left: 20%;width: 80%;">
+                        <caption><h4 style="margin:0">Products rates</h4></caption>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Rate r in p.Rates)
+                            {
+                                <tr>
+                                    <td>@r.Description</td>
+                                    <td>@r.Points</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

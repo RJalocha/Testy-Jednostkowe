@@ -1,0 +1,85 @@
+﻿@using OrderService.Models
+@model ClientOrder
+
+@{
+    ViewBag.Title = "GetClientOrder";
+}
+
+<script language="javascript">
+    function updateClientOrder(clientOrderId) {
+        window.location.href = `/ClientOrder/UpdateClientOrder?id=${clientOrderId}`;
+    }
+    function deleteClientOrder(clientOrderId) {
+        const response = confirm("Do you want to delete this clientOrder?")
+        if (response) {
+            $("#deleteClientOrderFormId" + clientOrderId).submit()
+        }
+    }
+</script>
+
+<h2>ClientOrder</h2>
+
+@Html.ValidationSummary(true)
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>Id</th>
+            <th>Client Name</th>
+            <th>Delivery Name</th>
+            <th>Delivery Price</th>
+            <th>Creation Date</th>
+            <th>Delivery Date</th>
+            <th>Discount</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="button" onclick="updateClientOrder(@Model.Id)" value="Edit" /></td>
+            @using (Html.BeginForm("DeleteClientOrderPost", "ClientOrder", new { id = Model.Id }, FormMethod.Post, new { id = "deleteClientOrderFormId" + @Model.Id }))
+            {
+                <td><input type="button" onclick="deleteClientOrder(@Model.Id)" value="Delete" /></td>
+            }
+            <td>@Model.Id</td>
+            <td>@Model.Client.UserName</td>
+            <td>@Model.Delivery.Name</td>
+            <td>@Model.Delivery.Price</td>
+            <td>@Model.CreationDate</td>
+            <td>@Model.DeliveryDate</td>
+            <td>@Model.Discount</td>
+            <td>@Model.TotalPrice</td>
+        </tr>
+
+        <tr>
+            <td colspan="12">
+                <table border="1" style="margin-left:100px;">
+                    <caption>Products in order</caption>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Order o in Model.Orders)
+                        {
+                            <tr>
+                                <td>@o.Id</td>
+                                <td>@o.Product.Name</td>
+                                <td>@o.Product.Price</td>
+                                <td>@o.Quantity</td>
+                                <td>@o.TotalPrice</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

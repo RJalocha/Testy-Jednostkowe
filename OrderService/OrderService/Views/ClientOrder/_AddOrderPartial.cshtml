@@ -1,0 +1,17 @@
+﻿@using OrderService.ViewModels
+@model AddOrderPartialViewModel
+
+<tr>
+    <td>
+        <input type='button' id='btnDel' value='Remove' onclick='$(this).parent().parent().remove();' class="btn btn-danger" />
+    </td>
+    <td>
+        <input class='productName form-control' type='text' value=@Model.ProductName />
+        <input class='productId' type='hidden' value='@Model.ProductId' />
+    </td>
+    <td>
+        <input class='quantity form-control' type='text' value=@Model.Quantity />
+    </td>
+</tr>
+
+

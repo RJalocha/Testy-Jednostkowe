@@ -1,0 +1,5 @@
+OrderService/OrderService/bin/*.dll
+OrderService/OrderService/bin/*.pdb
+OrderService/OrderService/bin/*.xml
+OrderService/OrderService/bin/roslyn/*.dll
+OrderService/OrderService/obj/*

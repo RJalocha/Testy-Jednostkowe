@@ -1,0 +1,46 @@
+﻿@using OrderService.Models
+@model Delivery
+
+@{
+    ViewBag.Title = "UpdateDelivery";
+    decimal? price = Model.Price != 0 ? (decimal?)Model.Price : null;
+    decimal? deliveryDays = Model.DeliveryDays != 0 ? (decimal?)Model.DeliveryDays : null;
+}
+
+<script language="javascript">
+    function cancelEdit() {
+        window.location.href = `/Delivery/GetDeliveriesList`;
+    }
+</script>
+
+<h2 id="update-delivery-header">Update Delivery</h2>
+
+@using (Html.BeginForm("UpdateDeliveryPost", "Delivery"))
+{
+    <fieldset>
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(m => m.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Price)
+            <input type="number" id="Price" name="Price" min="0" step="0.01" value="@price" class="form-control" />
+            @Html.ValidationMessageFor(m => m.Price)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.DeliveryDays)
+            <input type="number" id="DeliveryDays" name="DeliveryDays" min="0" step="1" value="@deliveryDays" class="form-control" />
+            @Html.ValidationMessageFor(m => m.DeliveryDays)
+        </div>
+
+        <input id="update-delivery" type="submit" value="Update" class="btn btn-success" />
+        <input id="cancel-update-delivery" type="button" value="Cancel" onclick="cancelEdit()" class="btn btn-default" />
+    </fieldset>
+}
