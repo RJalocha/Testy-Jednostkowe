@@ -117,6 +117,9 @@
     <Compile Include="Handlers\ClientOrderHandlerTest.cs" />
     <Compile Include="Handlers\DeliveryHandlerTest.cs" />
     <Compile Include="Handlers\ProductHandlerTest.cs" />
+    <Compile Include="Helpers\ClientOrderDeliveryDateCalculatorTest.cs" />
+    <Compile Include="Helpers\ClientOrderTotalPriceCalculatorTest.cs" />
+    <Compile Include="Helpers\OrderTotalPriceCalculatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
