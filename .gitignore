@@ -6,4 +6,3 @@ OrderService/OrderService/bin/roslyn/*.dll
 OrderService/OrderService/obj/*
 OrderService/packages/*
 OrderService/OrderService.Tests/obj/*
-OrderService/OrderService.Tests/bin/*
